@@ -1,5 +1,5 @@
 from src.masks import get_mask_account, get_mask_card_number
-from src.widget import mask_account_card, get_date
+from src.widget import get_date, mask_account_card
 
 # Пример вызова функций из masks.py
 print(get_mask_account("72777747288831274747"))
