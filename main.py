@@ -1,3 +1,4 @@
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 from src.masks import get_mask_account, get_mask_card_number
 from src.processing import filter_by_state, sort_by_date
 from src.widget import get_date, mask_account_card
@@ -33,3 +34,31 @@ sort = sort_by_date(
 )
 
 print(sort)
+
+transactions = [
+    {
+        "id": 939719570,
+        "operationAmount": {"amount": "9824.07", "currency": {"code": "USD"}},
+        "description": "Перевод организации",
+    },
+    {
+        "id": 142264268,
+        "operationAmount": {"amount": "79114.93", "currency": {"code": "USD"}},
+        "description": "Перевод со счета на счет",
+    },
+    {
+        "id": 873106923,
+        "operationAmount": {"amount": "43318.34", "currency": {"code": "RUB"}},
+        "description": "Перевод со счета на счет",
+    },
+]
+
+if __name__ == "__main__":
+    print("=== USD транзакции ===")
+    print(*filter_by_currency(transactions, "USD"), sep="\n---\n")
+
+    print("\n=== Описания транзакций ===")
+    print(*transaction_descriptions(transactions), sep="\n")
+
+    print("\n=== Номера карт 1-5 ===")
+    print(*card_number_generator(1, 5), sep="\n")
