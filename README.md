@@ -27,6 +27,7 @@ pip install -r requirements.txt
 ### - Модуль widget содержит функции для форматирования даты, и скрытия маскировки номера карты или счета
 
 ### - Модуль processing фильтрует данные по ключу, и сортирует данные по дате
+### - Модуль generators содержит функции для фильтрации транзакций, генерации их описания, и генерацию номера банковских карт в заданном диапазоне.
 
 ## Пример использования:
 
@@ -80,6 +81,38 @@ sort = sort_by_date(
 )
 
 print(sort)
+```
+
+Фильтр транзакций по заданной валюте 
+
+```
+from src.generators import filter_by_currency
+
+usd_transactions = filter_by_currency(transactions, "USD")
+for tx in usd_transactions:
+    print(tx)
+```
+
+Генерация описания транзакций
+
+```
+from src.generators  import transaction_descriptions
+
+for desc in transaction_descriptions(transactions):
+    print(desc)
+```
+
+Гнерация номеров банковских карт в заданном диапазоне
+
+```
+from src.generators  import card_number_generator
+
+for card_num in card_number_generator(1, 5):
+    print(card_num)
+    
+# 0000 0000 0000 0001
+# 0000 0000 0000 0002
+# ...
 ```
 
 ## Тестирование
