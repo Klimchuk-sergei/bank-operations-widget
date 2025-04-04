@@ -1,3 +1,4 @@
+from src.decorators import log
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 from src.masks import get_mask_account, get_mask_card_number
 from src.processing import filter_by_state, sort_by_date
@@ -62,3 +63,19 @@ if __name__ == "__main__":
 
     print("\n=== Номера карт 1-5 ===")
     print(*card_number_generator(1, 5), sep="\n")
+
+
+@log(filename="mylog.txt")
+def add(a: int, b: int) -> int:
+    return a + b
+
+
+add(1, 2)  # Запишет в файл: "2024-04-01 12:34:56 - add ok: Result = 3"
+
+
+@log()  # Без filename — вывод в консоль
+def divide(a: int, b: int) -> float:
+    return a / b
+
+
+divide(1, 0)  # Выведет в консоль: "divide error: ZeroDivisionError. Inputs: (1, 0), {}"

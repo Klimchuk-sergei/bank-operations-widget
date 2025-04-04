@@ -1,5 +1,5 @@
 import datetime
-from typing import Callable, Any, Optional
+from typing import Any, Callable, Optional
 
 
 def log(filename: Optional[str] = None) -> Callable:
@@ -23,8 +23,7 @@ def log(filename: Optional[str] = None) -> Callable:
                 success = True
                 message = f"{time_start} - {func_name} ok: Result = {result}"
             except Exception as e:
-                message = (f"{time_start} - {func_name} error: {type(e).__name__}."
-                           f"Inputs: {args}, {kwargs}\n")
+                message = f"{time_start} - {func_name} error: {type(e).__name__}." f"Inputs: {args}, {kwargs}\n"
                 raise e
             finally:
                 """
