@@ -7,7 +7,7 @@ def read_json_file(file_path: str) -> List[Dict[str, Union[str, float]]]:
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
-            if isinstance(data, list)
+            if isinstance(data, list):
                 return data
             return []
     except (FileNotFoundError, json.JSONDecodeError):
