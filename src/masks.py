@@ -1,20 +1,25 @@
 import logging
 from pathlib import Path
 
-# Проверяем есть ли папка logs, создаем её если её нет
-Path("logs").mkdir(exist_ok=True)
+# Указываем путь к папке logs в корне проекта
+LOG_DIR = Path(__file__).parent.parent / "logs"
+LOG_FILE = LOG_DIR / "masks.log"
 
+# Создаем папку, если ее нет
+LOG_DIR.mkdir(exist_ok=True)
+
+# Настройка логгера
 logger = logging.getLogger("masks")
 logger.setLevel(logging.DEBUG)
 
-file_handler = logging.FileHandler("logs/masks.log", mode="w")
+# Исправленный FileHandler с полным путем
+file_handler = logging.FileHandler(LOG_FILE, mode="w", encoding='utf-8')
 file_handler.setLevel(logging.DEBUG)
 
 file_formatter = logging.Formatter(
     fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S"
 )
-
 file_handler.setFormatter(file_formatter)
 
 logger.addHandler(file_handler)
@@ -36,14 +41,13 @@ def get_mask_card_number(card_number: str) -> str:
         return masked_card
 
     except Exception as e:
-        logger.error(f"Ошибка при маскировке номера картыЖ: {str(e)}", exc_info=True)
+        logger.error(f"Ошибка при маскировке номера карты: {str(e)}", exc_info=True)
         raise
 
 
 def get_mask_account(account_number: str) -> str:
     try:
-
-        logger.debug("НАчало маскировки номера счёта")
+        logger.debug("Начало маскировки номера счёта")
 
         """Проверяем, что номер счёта состоит более чем из 4 цифр"""
         if len(account_number) < 4 or not account_number.isdigit():
