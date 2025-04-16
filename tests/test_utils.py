@@ -1,5 +1,7 @@
 from unittest.mock import mock_open, patch
+
 from src.utils import read_json_file
+
 
 def test_read_json_file_valid():
     """Тест на правильное чтение JSON."""
@@ -16,5 +18,5 @@ def test_read_json_file_invalid():
         assert read_json_file("no_file.json") == []
 
     # JSON не список (например, просто число)
-    with patch("builtins.open", mock_open(read_data='123')):
+    with patch("builtins.open", mock_open(read_data="123")):
         assert read_json_file("bad.json") == []

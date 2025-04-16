@@ -1,5 +1,6 @@
 import os
 from typing import Dict, Union
+
 import requests
 from dotenv import load_dotenv
 
@@ -18,11 +19,7 @@ def convert_to_rub(transaction: Dict[str, Union[str, float]]) -> float:
         return float(amount)
 
     try:
-        response = requests.get(
-            API_URL,
-            headers={"apikey": API_KEY},
-            params={"base": currency, "symbols": "RUB"}
-        )
+        response = requests.get(API_URL, headers={"apikey": API_KEY}, params={"base": currency, "symbols": "RUB"})
         response.raise_for_status()
         rate = response.json()["rates"]["RUB"]
         return float(amount) * rate
