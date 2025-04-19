@@ -143,6 +143,24 @@ def multiply(a: int, b: int) -> int:
     return a * b
 ```
 
+## Чтение файлов CSV и XLSX
+
+Теперь проект поддерживает чтение финансовых операций из:
+- JSON файлов (как и раньше)
+- CSV файлов
+- Excel файлов (XLSX)
+
+Используйте:
+- `read_csv_file()` для CSV
+- `read_excel_file()` для Excel
+
+Пример:
+```python
+from read_csv_xlsx import read_csv, read_excel
+
+csv_data = read_csv('transactions.csv')
+excel_data = read_excel('transactions.xlsx')
+
 ## Тестирование
 ```
 Для тестирования используйте фреймворк pytest, а для измерения покрытия кода тестами — инструмент pytest-cov.
