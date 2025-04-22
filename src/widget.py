@@ -5,16 +5,16 @@ def mask_account_card(data: str) -> str:
     """
     Скрываем номер карты или счета.
     """
-    parts = data.split()    # Разделяем входные данные на части
+    parts = data.split()  # Разделяем входные данные на части
     if len(parts) < 2:
         raise ValueError("Некорректный формат входных данных.")
 
-    account_type = " ".join(parts[:-1])     # Получаем название карты или счета
-    number = parts[-1]      # Берем номер
+    account_type = " ".join(parts[:-1])  # Получаем название карты или счета
+    number = parts[-1]  # Берем номер
 
-    if number.isdigit() and len(number) == 16:      # Проверка на карту
+    if number.isdigit() and len(number) == 16:  # Проверка на карту
         masked_number = get_mask_card_number(number)
-    elif number.isdigit() and len(number) > 4:      # Проверка на счет
+    elif number.isdigit() and len(number) > 4:  # Проверка на счет
         masked_number = get_mask_account(number)
     else:
         raise ValueError("Некорректный номер карты или счёта.")
@@ -25,8 +25,15 @@ def mask_account_card(data: str) -> str:
 def get_date(date_str: str) -> str:
     """
     Преобразует дату из формата '2024-03-11T02:26:18.671407' в 'ДД.ММ.ГГГГ'.
+    Если формат некорректен, выбрасывает ValueError.
     """
-    date_part = date_str.split("T")[0]      # Разделяем по букве Т
-    year, month, day = date_part.split("-")
-    formatted_date = f"{day}.{month}.{year}"
-    return formatted_date
+    if "T" not in date_str:
+        raise ValueError("Некорректный формат даты. Ожидается формат 'YYYY-MM-DDThh:mm:ss'.")
+
+    try:
+        date_part = date_str.split("T")[0]  # Разделяем по букве Т
+        year, month, day = date_part.split("-")
+        formatted_date = f"{day}.{month}.{year}"
+        return formatted_date
+    except (IndexError, ValueError):
+        raise ValueError("Некорректный формат даты. Ожидается формат 'YYYY-MM-DDThh:mm:ss'.")
