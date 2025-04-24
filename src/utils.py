@@ -30,29 +30,63 @@ file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
 
-def read_json_file(file_path: str) -> List[Dict[str, Union[str, float]]]:
-    """Чтение Json файла и возвращение списка транзакций. Если файл пустой, возвращается []"""
-    try:
-        logger.debug(f"Попытка чтения файла: {file_path}")
+# def read_json_file(file_path: str) -> List[Dict[str, Union[str, float]]]:
+#     """Чтение Json файла и возвращение списка транзакций. Если файл пустой, возвращается []"""
+#     try:
+#         logger.debug(f"Попытка чтения файла: {file_path}")
+#
+#         with open(file_path, "r", encoding="utf-8") as file:
+#             data = json.load(file)
+#
+#             if isinstance(data, list):
+#                 logger.info(f"Успешно прочитано {len(data)} транзакций из файла {file_path}")
+#                 return data
+#
+#             logger.warning(f"Файл {file_path} не содержит список транзакций")
+#             return []
+#
+#     except FileNotFoundError:
+#         logger.error(f"Файл не найден: {file_path}")
+#         return []
+#
+#     except json.JSONDecodeError:
+#         logger.error(f"Ошибка декодирования JSON в файле: {file_path}")
+#         return []
+#
+#     except Exception as e:
+#         logger.error(f"Неожиданная ошибка при чтении файла {file_path}: {str(e)}", exc_info=True)
+#         return []
 
-        with open(file_path, "r", encoding="utf-8") as file:
+def read_json_file(file_path: str = "data/operations.json") -> List[Dict[str, Union[str, float]]]:
+    """Чтение Json файла и возвращение списка транзакций.
+    Если файл пустой, возвращается [].
+    По умолчанию читает из data/operations.json"""
+    try:
+        # Преобразуем относительный путь в абсолютный
+        path = Path(file_path)
+        if not path.is_absolute():
+            path = Path(__file__).parent.parent / path
+
+        logger.debug(f"Попытка чтения файла: {path}")
+
+        with open(path, "r", encoding="utf-8") as file:
             data = json.load(file)
 
             if isinstance(data, list):
-                logger.info(f"Успешно прочитано {len(data)} транзакций из файла {file_path}")
+                logger.info(f"Успешно прочитано {len(data)} транзакций из файла {path}")
                 return data
 
-            logger.warning(f"Файл {file_path} не содержит список транзакций")
+            logger.warning(f"Файл {path} не содержит список транзакций")
             return []
 
     except FileNotFoundError:
-        logger.error(f"Файл не найден: {file_path}")
+        logger.error(f"Файл не найден: {path}")
         return []
 
     except json.JSONDecodeError:
-        logger.error(f"Ошибка декодирования JSON в файле: {file_path}")
+        logger.error(f"Ошибка декодирования JSON в файле: {path}")
         return []
 
     except Exception as e:
-        logger.error(f"Неожиданная ошибка при чтении файла {file_path}: {str(e)}", exc_info=True)
+        logger.error(f"Неожиданная ошибка при чтении файла {path}: {str(e)}", exc_info=True)
         return []
