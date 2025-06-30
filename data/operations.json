@@ -736,8 +736,8 @@
     "operationAmount": {
       "amount": "19683.25",
       "currency": {
-        "name": "USD",
-        "code": "USD"
+        "name": "EUR",
+        "code": "EUR"
       }
     },
     "description": "Перевод со счета на счет",
